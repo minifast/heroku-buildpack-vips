@@ -35,7 +35,9 @@ RUN apt-get update && apt-get install -y \
 	liblcms2-dev \
 	libxml2-dev \
 	libfftw3-dev \
-  libpoppler-glib-dev
+  libpoppler-glib-dev \
+	libwebp-dev \
+	liborc-dev
 
 ARG GIFLIB_VERSION=5.1.4
 ARG GIFLIB_URL=http://downloads.sourceforge.net/project/giflib
@@ -45,18 +47,6 @@ RUN cd /usr/src \
 	&& tar xf giflib-${GIFLIB_VERSION}.tar.bz2 \
 	&& cd giflib-${GIFLIB_VERSION} \
 	&& ./configure --prefix=/usr/src/vips \
-	&& make \
-	&& make install
-
-ARG ORC_VERSION=0.4.28
-ARG ORC_URL=http://cgit.freedesktop.org/gstreamer/orc/snapshot
-
-RUN cd /usr/src \
-	&& wget ${ORC_URL}/orc-$ORC_VERSION.tar.gz \
-	&& tar xf orc-${ORC_VERSION}.tar.gz \
-	&& cd orc-${ORC_VERSION} \
-	&& ./autogen.sh \
-	&& ./configure --prefix=/usr/src/vips --disable-gtk-doc \
 	&& make \
 	&& make install
 
@@ -84,7 +74,7 @@ RUN cd /usr/src \
 
 # clean the build area ready for packaging
 RUN cd /usr/src/vips \
-	&& rm bin/gif* bin/orc* bin/gsf* bin/batch_* bin/vips-* \
+	&& rm bin/gif* bin/gsf* bin/batch_* bin/vips-* \
 	&& rm bin/vipsprofile bin/light_correct bin/shrink_width \
 	&& strip lib/*.a lib/lib*.so* \
 	&& rm -rf share/gtk-doc \
