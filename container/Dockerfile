@@ -37,6 +37,7 @@ RUN apt-get update && apt-get install -y \
 	libfftw3-dev \
   libpoppler-glib-dev \
 	libwebp-dev \
+	libheif-dev \
 	liborc-dev
 
 ARG GIFLIB_VERSION=5.1.4
